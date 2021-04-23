@@ -12,6 +12,7 @@ import UIKit
 
 class ToDoViewController: UIViewController {
     
+    // Array of saved data in Realm
     var arrayData: Results<Task>!
 
     @IBOutlet weak var tableView: UITableView!
