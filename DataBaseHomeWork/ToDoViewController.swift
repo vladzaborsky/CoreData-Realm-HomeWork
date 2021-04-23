@@ -12,30 +12,44 @@ import UIKit
 
 class ToDoViewController: UIViewController {
     
-    // Array of saved data in Realm
-    var arrayData: Results<Task>!
+    let arrayData = realm.objects(Task.self)
 
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        arrayData = realm.objects(Task.self)
-        
-        let item = Task()
-        item.item = "Покурить"
-        
-        StorageManager.saveTask(item)
-        
-        let item2 = realm.objects(Task.self)
-        print(item2)
-        
+        updateViews()
+    
     }
     
-// MARK: - Add Button Tapped
+// MARK: - Add Button Tapped & Sent task to Realm
     
     @IBAction func addButtonTapped(_ sender: Any) {
         
+        
+        let alert = UIAlertController(title: "Добавить задание", message: nil, preferredStyle: .alert)
+        alert.addTextField(configurationHandler: nil)
+        let cancelButton = UIAlertAction(title: "Отменить", style: .cancel)
+        let action = UIAlertAction(title: "Добавить", style: .default) { (_) in
+            guard let inputTask = alert.textFields?.first?.text else { return print("Введите задание") }
+            let task = Task()
+            task.item = inputTask
+            StorageManager.saveTask(task)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        
+        alert.addAction(action)
+        alert.addAction(cancelButton)
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func updateViews() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "To Do App"
     }
 
 }
@@ -43,6 +57,27 @@ class ToDoViewController: UIViewController {
 // MARK: - TableView Delegate
 
 extension ToDoViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let task = arrayData[indexPath.row]
+        
+        let alert = UIAlertController(title: "Удалить ячейку?", message: "Восстановить будет невозможно", preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: "Отмена", style: .cancel)
+        let deleteButton = UIAlertAction(title: "Удалить", style: .destructive) { (_) in
+            StorageManager.deleteTask(task)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        
+        alert.addAction(deleteButton)
+        alert.addAction(cancelButton)
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
     
 }
 
@@ -52,16 +87,15 @@ extension ToDoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        return arrayData.isEmpty ? 0 : arrayData.count
-        return 1
+        return arrayData.isEmpty ? 0 : arrayData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell", for: indexPath)
         
-//        let task = self.arrayData[indexPath.row]
-//        cell.textLabel?.text = task.item
+        let task = self.arrayData[indexPath.row]
+        cell.textLabel?.text = task.item
         
         return cell
     }
