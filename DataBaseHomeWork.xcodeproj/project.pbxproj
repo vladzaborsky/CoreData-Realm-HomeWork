@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,9 @@
 		F52B4A462632B85A00BEBA31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F52B4A452632B85A00BEBA31 /* Assets.xcassets */; };
 		F52B4A492632B85A00BEBA31 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F52B4A472632B85A00BEBA31 /* LaunchScreen.storyboard */; };
 		F52B4A522632BA8B00BEBA31 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52B4A512632BA8B00BEBA31 /* Persistence.swift */; };
+		F5360A8B2632E853000C5A2F /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5360A8A2632E853000C5A2F /* DataModel.swift */; };
+		F5360A8E2632E8ED000C5A2F /* Storage Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5360A8D2632E8ED000C5A2F /* Storage Manager.swift */; };
+		F5360A91263344E1000C5A2F /* ToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5360A90263344E0000C5A2F /* ToDoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		F52B4A482632B85A00BEBA31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F52B4A4A2632B85A00BEBA31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F52B4A512632BA8B00BEBA31 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		F5360A8A2632E853000C5A2F /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		F5360A8D2632E8ED000C5A2F /* Storage Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Storage Manager.swift"; sourceTree = "<group>"; };
+		F5360A90263344E0000C5A2F /* ToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +56,6 @@
 				780F32B04D223F66943013D7 /* Pods-DataBaseHomeWork.debug.xcconfig */,
 				CA8F54C6FBACF37EC6A4C845 /* Pods-DataBaseHomeWork.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -86,7 +91,10 @@
 				F52B4A3C2632B85700BEBA31 /* AppDelegate.swift */,
 				F52B4A3E2632B85700BEBA31 /* SceneDelegate.swift */,
 				F52B4A402632B85700BEBA31 /* ViewController.swift */,
+				F5360A8A2632E853000C5A2F /* DataModel.swift */,
+				F5360A8D2632E8ED000C5A2F /* Storage Manager.swift */,
 				F52B4A422632B85700BEBA31 /* Main.storyboard */,
+				F5360A90263344E0000C5A2F /* ToDoViewController.swift */,
 				F52B4A512632BA8B00BEBA31 /* Persistence.swift */,
 				F52B4A452632B85A00BEBA31 /* Assets.xcassets */,
 				F52B4A472632B85A00BEBA31 /* LaunchScreen.storyboard */,
@@ -209,10 +217,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5360A8B2632E853000C5A2F /* DataModel.swift in Sources */,
 				F52B4A412632B85700BEBA31 /* ViewController.swift in Sources */,
+				F5360A8E2632E8ED000C5A2F /* Storage Manager.swift in Sources */,
 				F52B4A522632BA8B00BEBA31 /* Persistence.swift in Sources */,
 				F52B4A3D2632B85700BEBA31 /* AppDelegate.swift in Sources */,
 				F52B4A3F2632B85700BEBA31 /* SceneDelegate.swift in Sources */,
+				F5360A91263344E1000C5A2F /* ToDoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
