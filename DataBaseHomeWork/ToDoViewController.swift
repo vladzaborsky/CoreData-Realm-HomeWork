@@ -2,7 +2,7 @@
 //  ToDoViewController.swift
 //  DataBaseHomeWork
 //
-//  Created by Влад Заборский on 23.04.2021.
+//  Created by Vlad Zaborsky on 23.04.2021.
 //
 
 // WHAT TO DO:
@@ -23,10 +23,9 @@ class ToDoViewController: UIViewController {
     
     }
     
-// MARK: - Add Button Tapped & Sent task to Realm
+// MARK: - Add Button Tapped & Send task object to Realm
     
     @IBAction func addButtonTapped(_ sender: Any) {
-        
         
         let alert = UIAlertController(title: "Добавить задание", message: nil, preferredStyle: .alert)
         alert.addTextField(configurationHandler: nil)
@@ -68,6 +67,9 @@ extension ToDoViewController: UITableViewDelegate {
         let deleteButton = UIAlertAction(title: "Удалить", style: .destructive) { (_) in
             StorageManager.deleteTask(task)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
         
         alert.addAction(deleteButton)
@@ -76,9 +78,6 @@ extension ToDoViewController: UITableViewDelegate {
         present(alert, animated: true, completion: nil)
         
     }
-    
-    
-    
 }
 
 // MARK: - Table View Data Source
