@@ -27,6 +27,8 @@ class WeatherViewController: UIViewController {
         super.viewDidLoad()
         
         updateUI()
+        print(arrayData2)
+//        clearRealm()
     }
     
     func updateUI() {
@@ -34,7 +36,7 @@ class WeatherViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Weather App"
         
-        let lastAddedObject = arrayData2.last
+        let lastAddedObject = arrayData2.first
         if let currentTempData = lastAddedObject?.temp {
             self.currentTemp.text = "\(Int(currentTempData - 273.15)) °C"
         }
@@ -48,18 +50,23 @@ class WeatherViewController: UIViewController {
     }
 // MARK: - Пытаюсь преобразовать полученные данные в DataSet с помощью функции
     
-    func generateData(_ object: Response) -> DataSet {
-        
-        let dataSet = DataSet()
-        dataSet.temp = object.current.temp
+    func generateData(_ object: Response) {
         
         for item in object.daily {
-            let dailyItem = Daily()
-            dailyItem.day = item.temp.day
-            dataSet.daily.append(dailyItem)
+            let dataSet = DataSet()
+            dataSet.temp = object.current.temp
+            dataSet.day = item.temp.day
+            print(item.temp.day)
+            
+            try! realm.write {
+                realm.add(dataSet)
+            }
+//            let dailyItem = Daily()
+//            dailyItem.day = item.temp.day
+//            dataSet.daily.append(dailyItem)
+            
         }
         
-        return dataSet
     }
 
     
@@ -69,10 +76,7 @@ class WeatherViewController: UIViewController {
         
         getData.getData(url) { (data) in
             DispatchQueue.main.async {
-                let itemDataSet = self.generateData(data)
-                try! realm.write {
-                    realm.add(itemDataSet)
-                }
+                self.generateData(data)
                 self.currentTemp.text = data.current.dayTemperature
                 self.tableView.reloadData()
             }
@@ -88,28 +92,24 @@ class WeatherViewController: UIViewController {
     
 }
 
-
-
-
 extension WeatherViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        var numbersOfRows = 0
+//        var numbersOfRows = 0
+//
+//        for item in arrayData2 {
+//            numbersOfRows = item.daily.count
+//        }
         
-        for item in arrayData2 {
-            numbersOfRows = item.daily.count
-        }
-        
-        return numbersOfRows
+        return arrayData2.isEmpty ? 0 : arrayData2.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath)
         
-        for row in arrayData2 {
-            let oneDay = row.daily[indexPath.row]
-            cell.textLabel?.text =  "\(Int(oneDay.day - 273.15))°C"
-        }
+        let object = arrayData2[indexPath.row]
+
+        cell.textLabel?.text = "\(Int(object.day - 273.15)) °C"
         
         return cell
     }
