@@ -31,11 +31,11 @@ class ToDoViewController: UIViewController {
         alert.addTextField(configurationHandler: nil)
         let cancelButton = UIAlertAction(title: "Отменить", style: .cancel)
         let action = UIAlertAction(title: "Добавить", style: .default) { (_) in
-            guard let inputTask = alert.textFields?.first?.text else { return print("Введите задание") }
+            guard let inputTask = alert.textFields?.first?.text else { return }
             let task = Task()
             task.item = inputTask
             StorageManager.saveTask(task)
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { 
                 self.tableView.reloadData()
             }
         }
